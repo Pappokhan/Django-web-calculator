@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Scientific Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  #calculator {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  #result {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  button {
+    width: 60px;
+    height: 40px;
+    margin: 5px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+<div id="calculator">
+  <div id="result">0</div>
+  <button onclick="clearResult()">C</button>
+  <button onclick="appendToResult('7')">7</button>
+  <button onclick="appendToResult('8')">8</button>
+  <button onclick="appendToResult('9')">9</button>
+  <button onclick="appendToResult('/')">/</button>
+  <button onclick="appendToResult('4')">4</button>
+  <button onclick="appendToResult('5')">5</button>
+  <button onclick="appendToResult('6')">6</button>
+  <button onclick="appendToResult('*')">*</button>
+  <button onclick="appendToResult('1')">1</button>
+  <button onclick="appendToResult('2')">2</button>
+  <button onclick="appendToResult('3')">3</button>
+  <button onclick="appendToResult('-')">-</button>
+  <button onclick="appendToResult('0')">0</button>
+  <button onclick="appendToResult('.')">.</button>
+  <button onclick="calculateResult()">=</button>
+  <button onclick="appendToResult('+')">+</button>
+  <button onclick="calculateSquareRoot()">√</button>
+  <button onclick="calculateExponent()">x^2</button>
+  <button onclick="calculateTrig('sin')">sin</button>
+  <button onclick="calculateTrig('cos')">cos</button>
+  <button onclick="calculateTrig('tan')">tan</button>
+  <button onclick="memoryStore()">M+</button>
+  <button onclick="memoryRecall()">MR</button>
+  <button onclick="memoryClear()">MC</button>
+</div>
+<div class="sign-up-box">
+  <h1>Click Next to Basic Calculator</h1>
+  <a href="/in1/">Next</a>
+</div>
+<script>
+  let resultElement = document.getElementById('result');
+  let currentExpression = '';
+  let memoryValue = 0;
+
+  function appendToResult(value) {
+    currentExpression += value;
+    resultElement.textContent = currentExpression;
+  }
+
+  function calculateResult() {
+    try {
+      currentExpression = eval(currentExpression).toString();
+      resultElement.textContent = currentExpression;
+    } catch (error) {
+      resultElement.textContent = 'Error';
+    }
+  }
+
+  function calculateSquareRoot() {
+    try {
+      currentExpression = Math.sqrt(eval(currentExpression)).toString();
+      resultElement.textContent = currentExpression;
+    } catch (error) {
+      resultElement.textContent = 'Error';
+    }
+  }
+
+  function calculateExponent() {
+    try {
+      currentExpression = Math.pow(eval(currentExpression), 2).toString();
+      resultElement.textContent = currentExpression;
+    } catch (error) {
+      resultElement.textContent = 'Error';
+    }
+  }
+
+  function calculateTrig(func) {
+    try {
+      let angle = eval(currentExpression);
+      if (func === 'sin') {
+        currentExpression = Math.sin(angle).toString();
+      } else if (func === 'cos') {
+        currentExpression = Math.cos(angle).toString();
+      } else if (func === 'tan') {
+        currentExpression = Math.tan(angle).toString();
+      }
+      resultElement.textContent = currentExpression;
+    } catch (error) {
+      resultElement.textContent = 'Error';
+    }
+  }
+
+  function memoryStore() {
+    memoryValue += eval(currentExpression);
+    clearResult();
+  }
+
+  function memoryRecall() {
+    currentExpression = memoryValue.toString();
+    resultElement.textContent = currentExpression;
+  }
+
+  function memoryClear() {
+    memoryValue = 0;
+  }
+
+  function clearResult() {
+    currentExpression = '';
+    resultElement.textContent = '0';
+  }
+</script>
+</body>
+</html>
